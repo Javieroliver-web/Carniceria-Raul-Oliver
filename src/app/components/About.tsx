@@ -74,42 +74,7 @@ export function About() {
               />
             </div>
 
-            {/* Floating quote badge */}
-            <div
-              className="about-badge"
-              style={{
-                position: 'absolute',
-                bottom: '-1.5rem',
-                right: '-1.5rem',
-                background: 'var(--color-red)',
-                color: 'white',
-                borderRadius: '8px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                boxShadow: '0 12px 35px rgba(192,57,43,0.45)',
-                minWidth: '140px',
-                maxWidth: '160px',
-              }}
-            >
-              <div style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: '2.8rem',
-                fontWeight: 900,
-                lineHeight: 1,
-              }}>
-                +25
-              </div>
-              <div style={{
-                fontSize: '0.7rem',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                marginTop: '0.4rem',
-                opacity: 0.92,
-                textTransform: 'uppercase',
-              }}>
-                Años de<br />confianza
-              </div>
-            </div>
+
 
             {/* Side caption */}
             <div style={{
