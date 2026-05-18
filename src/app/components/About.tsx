@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import raulPhoto from '../../imports/raul-oliver.jpg';
+import raulPhoto from '../../imports/Raul-oliver.jpg';
 
 const highlights = [
   'Más de 25 años sirviendo a Lora del Río y alrededores',
