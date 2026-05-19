@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import logo from '../../imports/image.png';
 import { Facebook, Instagram, MapPin, Phone, Clock } from 'lucide-react';
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const [openLegal, setOpenLegal] = useState<'aviso' | 'privacidad' | null>(null);
 
   return (
     <footer style={{ background: 'var(--color-black)', color: 'rgba(255,255,255,0.7)' }}>
@@ -191,16 +193,120 @@ export function Footer() {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '0.5rem',
+          gap: '1rem',
         }}>
           <p style={{ fontSize: '0.78rem' }}>
             © {year} Carnicería Raúl Oliver · Todos los derechos reservados
           </p>
+          <div style={{ display: 'flex', gap: '1.25rem' }}>
+            <button
+              onClick={() => setOpenLegal('aviso')}
+              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
+            >
+              Aviso Legal
+            </button>
+            <button
+              onClick={() => setOpenLegal('privacidad')}
+              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
+            >
+              Política de Privacidad
+            </button>
+          </div>
           <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)' }}>
-            Lora del Río, Sevilla · Desde 1999
+            Lora del Río, Sevilla · Desde 1999 · Desarrollado por <a href="https://portfolio-javieroliver-web.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'underline', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>Francisco Javier Párraga Oliver</a>
           </p>
         </div>
       </div>
+
+      {/* Legal Modals */}
+      {openLegal && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.85)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '1.5rem',
+        }} onClick={() => setOpenLegal(null)}>
+          <div style={{
+            background: 'var(--color-cream)',
+            color: 'var(--color-charcoal)',
+            maxWidth: '600px',
+            width: '100%',
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            borderRadius: '8px',
+            padding: '2.5rem',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+            position: 'relative',
+          }} onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setOpenLegal(null)}
+              style={{
+                position: 'absolute',
+                top: '1rem', right: '1rem',
+                background: 'none', border: 'none',
+                fontSize: '1.8rem', cursor: 'pointer',
+                color: 'var(--color-charcoal)',
+                opacity: 0.7,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.7')}
+            >
+              ×
+            </button>
+            {openLegal === 'aviso' ? (
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Aviso Legal</h3>
+                <p style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
+                  En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se exponen los siguientes datos identificativos del titular de este sitio web:
+                </p>
+                <ul style={{ fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem', paddingLeft: '1.2rem', color: 'var(--color-gray-600)', listStyleType: 'disc' }}>
+                  <li><strong>Titular:</strong> Raúl Oliver Ruiz</li>
+                  <li><strong>NIF/NIE:</strong> 14622915K</li>
+                  <li><strong>Domicilio Social:</strong> C/ José Montoto y González de Hoyuela, 6, 41440 Lora del Río, Sevilla</li>
+                  <li><strong>Teléfono:</strong> +34 625 468 165</li>
+                  <li><strong>Email:</strong> rauloliver81@icloud.com</li>
+                </ul>
+                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>1. Propiedad Intelectual</h4>
+                <p style={{ fontSize: '0.82rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
+                  El código fuente, los diseños gráficos, las imágenes, las fotografías, las animaciones, los textos, así como la información y los contenidos de esta web están protegidos por la legislación española sobre los derechos de propiedad intelectual e industrial a favor del titular.
+                </p>
+                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>2. Limitación de Responsabilidad</h4>
+                <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
+                  El titular no se hace responsable de los daños derivados del uso de los contenidos del sitio web o de incidencias en la disponibilidad del servicio.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Política de Privacidad</h3>
+                <p style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
+                  De conformidad con lo dispuesto en el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos de cómo tratamos tus datos personales:
+                </p>
+                <ul style={{ fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem', paddingLeft: '1.2rem', color: 'var(--color-gray-600)', listStyleType: 'disc' }}>
+                  <li><strong>Responsable del Tratamiento:</strong> Raúl Oliver Ruiz</li>
+                  <li><strong>Finalidad:</strong> Atender las consultas de información o solicitudes realizadas mediante contacto telefónico, WhatsApp o redes sociales.</li>
+                  <li><strong>Legitimación:</strong> Consentimiento del interesado al ponerse en contacto directo con el establecimiento.</li>
+                  <li><strong>Conservación:</strong> Los datos se conservarán durante el tiempo estrictamente necesario para responder y gestionar la consulta.</li>
+                  <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal.</li>
+                </ul>
+                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Tus Derechos</h4>
+                <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
+                  Puedes ejercer tus derechos de acceso, rectificación, supresión y limitación del tratamiento escribiendo a la dirección del responsable o a través de los datos de contacto facilitados.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </footer>
   );
 }

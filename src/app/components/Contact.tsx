@@ -96,7 +96,7 @@ export function Contact() {
               <div>
                 <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--color-charcoal)', marginBottom: '0.25rem' }}>Teléfono</div>
                 <a
-                  href="tel:+34955812345"
+                  href="tel:+34625468165"
                   style={{
                     fontSize: '0.88rem',
                     color: 'var(--color-red)',
@@ -107,7 +107,7 @@ export function Contact() {
                   onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-red-dark)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-red)')}
                 >
-                  Consultar por teléfono
+                  +34 625 468 165
                 </a>
               </div>
             </div>

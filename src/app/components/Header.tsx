@@ -95,7 +95,7 @@ export function Header() {
                 </a>
               ))}
               <a
-                href="tel:+34955"
+                href="tel:+34625468165"
                 className="btn-primary"
                 style={{ padding: '0.6rem 1.4rem', fontSize: '0.85rem' }}
               >
@@ -133,7 +133,7 @@ export function Header() {
         {navLinks.map(link => (
           <a key={link.href} href={link.href} onClick={closeMenu}>{link.label}</a>
         ))}
-        <a href="tel:+34955" className="btn-primary" onClick={closeMenu}>
+        <a href="tel:+34625468165" className="btn-primary" onClick={closeMenu}>
           <Phone size={16} /> Llamar ahora
         </a>
       </div>
