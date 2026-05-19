@@ -191,7 +191,7 @@ export function Contact() {
             minHeight: '450px',
           }}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d-5.527305984692498!3d37.6582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0c59e5f8a3b1af%3A0xd42a5c2e1c9f2e7!2sC.%20Jos%C3%A9%20Montoto%20y%20Gonz%C3%A1lez%20de%20Hoyuela%2C%206%2C%2041440%20Lora%20del%20R%C3%ADo%2C%20Sevilla!5e0!3m2!1ses!2ses!4v1684000000000!5m2!1ses!2ses"
+              src="https://maps.google.com/maps?q=Calle%20Jos%C3%A9%20Montoto%20y%20Gonz%C3%A1lez%20de%20Hoyuela%206,%20Lora%20del%20R%C3%ADo,%20Sevilla&t=&z=17&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, display: 'block', minHeight: '450px' }}

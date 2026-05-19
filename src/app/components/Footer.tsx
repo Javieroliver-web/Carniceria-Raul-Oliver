@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from '../../imports/image.png';
-import { Facebook, Instagram, MapPin, Phone, Clock } from 'lucide-react';
+import { Facebook, Instagram, MapPin, Clock } from 'lucide-react';
 
 export function Footer() {
   const year = new Date().getFullYear();
