@@ -2,15 +2,8 @@ import { useEffect, useRef } from 'react';
 import { ChevronDown, Star } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
-const heroImages = [
-  'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400',
-  'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400',
-  'https://images.unsplash.com/photo-1551028150-63d37fa35a2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400',
-];
-
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null);
-  const indexRef = useRef(0);
 
   // Slow Ken Burns parallax on scroll
   useEffect(() => {
