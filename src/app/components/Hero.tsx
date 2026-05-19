@@ -122,7 +122,7 @@ export function Hero() {
               fontStyle: 'italic',
               color: 'var(--color-red-light)',
             }}>Charcutería</span>{' '}
-            Raúl Oliver
+            <span style={{ whiteSpace: 'nowrap' }}>Raúl Oliver</span>
           </h1>
 
           {/* Gold line */}
