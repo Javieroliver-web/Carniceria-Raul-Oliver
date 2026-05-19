@@ -270,9 +270,9 @@ export function Footer() {
                   En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se exponen los siguientes datos identificativos del titular de este sitio web:
                 </p>
                 <ul style={{ fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem', paddingLeft: '1.2rem', color: 'var(--color-gray-600)', listStyleType: 'disc' }}>
-                  <li><strong>Titular:</strong> Raúl Oliver Ruiz</li>
+                  <li><strong>Titular:</strong> Raúl Oliver Sánchez</li>
                   <li><strong>NIF/NIE:</strong> 14622915K</li>
-                  <li><strong>Domicilio Social:</strong> C/ José Montoto y González de Hoyuela, 6, 41440 Lora del Río, Sevilla</li>
+                  <li><strong>Domicilio Social:</strong> C/ Anea, 12, 41440 Lora del Río, Sevilla</li>
                   <li><strong>Teléfono:</strong> +34 625 468 165</li>
                   <li><strong>Email:</strong> rauloliver81@icloud.com</li>
                 </ul>
@@ -292,7 +292,7 @@ export function Footer() {
                   De conformidad con lo dispuesto en el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos de cómo tratamos tus datos personales:
                 </p>
                 <ul style={{ fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem', paddingLeft: '1.2rem', color: 'var(--color-gray-600)', listStyleType: 'disc' }}>
-                  <li><strong>Responsable del Tratamiento:</strong> Raúl Oliver Ruiz</li>
+                  <li><strong>Responsable del Tratamiento:</strong> Raúl Oliver Sánchez</li>
                   <li><strong>Finalidad:</strong> Atender las consultas de información o solicitudes realizadas mediante contacto telefónico, WhatsApp o redes sociales.</li>
                   <li><strong>Legitimación:</strong> Consentimiento del interesado al ponerse en contacto directo con el establecimiento.</li>
                   <li><strong>Conservación:</strong> Los datos se conservarán durante el tiempo estrictamente necesario para responder y gestionar la consulta.</li>
