@@ -1,48 +1,55 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import elaboradosImg from '../../imports/Elaborados.jpg';
+import avesImg from '../../imports/Aves.jpg';
+import terneraImg from '../../imports/Ternera.jpg';
+import ibericosImg from '../../imports/jamon.jpg';
+import cerdoImg from '../../imports/Cerdo.jpg';
+import corderoImg from '../../imports/Cordero.jpg';
 
 const categories = [
   {
     name: 'Ternera',
     tag: 'Premium',
     items: ['Chuletones', 'Solomillo', 'Entrecot', 'Lomo alto', 'Redondo', 'Falda'],
-    image: 'https://images.unsplash.com/photo-1588347818481-7c0caae8e49c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: terneraImg,
     color: '#7b2d2d',
   },
   {
     name: 'Cerdo',
     tag: 'Selección',
     items: ['Secreto ibérico', 'Solomillo', 'Costillas', 'Chuletillas', 'Presa', 'Carrillada'],
-    image: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: cerdoImg,
     color: '#8b4513',
   },
   {
     name: 'Cordero',
     tag: 'Temporada',
     items: ['Chuletillas', 'Paletilla', 'Pierna', 'Costillar', 'Chuletas', 'Jarrete'],
-    image: 'https://images.unsplash.com/photo-1594756202469-9ff9799b2e4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: corderoImg,
     color: '#5a3e28',
   },
   {
     name: 'Aves',
     tag: 'Diario',
     items: ['Pollo entero', 'Pollo partido', 'Pavo', 'Codornices', 'Muslos', 'Alitas'],
-    image: 'https://images.unsplash.com/photo-1612873100812-f56f9b77db8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: avesImg,
     color: '#6b5a2a',
   },
   {
     name: 'Elaborados',
     tag: 'Artesano',
     items: ['Hamburguesas', 'Pinchitos', 'Albóndigas', 'Flamenquines', 'Adobados', 'Salchichas'],
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: elaboradosImg,
     color: '#8b3a3a',
   },
   {
     name: 'Ibéricos',
     tag: 'Tradición',
     items: ['Jamón ibérico', 'Chorizo', 'Salchichón', 'Lomo', 'Morcilla', 'Panceta'],
-    image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    image: ibericosImg,
     color: '#7a2828',
+    position: 'bottom',
   },
 ];
 
@@ -117,7 +124,13 @@ export function Products() {
                   <ImageWithFallback
                     src={cat.image}
                     alt={cat.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: (cat as any).position || 'center',
+                      display: 'block'
+                    }}
                   />
                   {/* Tag */}
                   <div style={{
