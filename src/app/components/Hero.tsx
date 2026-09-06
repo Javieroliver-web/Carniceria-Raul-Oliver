@@ -5,16 +5,29 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null);
 
-  // Slow Ken Burns parallax on scroll
+  // Parallax suave al hacer scroll. Se escribe el estilo dentro de un
+  // requestAnimationFrame (un evento de scroll puede dispararse decenas de
+  // veces por fotograma) y se desactiva si el usuario pide movimiento reducido.
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduceMotion.matches) return;
+
+    let frame = 0;
     const onScroll = () => {
-      if (imgRef.current) {
-        const y = window.scrollY * 0.35;
-        imgRef.current.style.transform = `scale(1.08) translateY(${y}px)`;
-      }
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (imgRef.current) {
+          imgRef.current.style.transform = `scale(1.08) translateY(${window.scrollY * 0.35}px)`;
+        }
+      });
     };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -36,13 +49,15 @@ export function Hero() {
           position: 'absolute',
           inset: '-8%',
           transform: 'scale(1.08)',
-          transition: 'transform 0.1s linear',
           zIndex: 0,
         }}
       >
+        {/* Imagen ambiental de fondo (decorativa): alt vacío para que los
+            lectores de pantalla no la anuncien. Si cambia esta URL hay que
+            actualizar también el <link rel="preload"> de index.html. */}
         <ImageWithFallback
           src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400"
-          alt="Interior Carnicería Raúl Oliver"
+          alt=""
           style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }}
         />
       </div>

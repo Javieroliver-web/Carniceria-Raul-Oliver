@@ -1,0 +1,62 @@
+{
+  "Ternera.webp": {
+    "width": 800,
+    "height": 600,
+    "bytes": 82832
+  },
+  "Cerdo.webp": {
+    "width": 695,
+    "height": 696,
+    "bytes": 82036
+  },
+  "Cordero.webp": {
+    "width": 768,
+    "height": 768,
+    "bytes": 78036
+  },
+  "Aves.webp": {
+    "width": 800,
+    "height": 600,
+    "bytes": 76948
+  },
+  "Elaborados.webp": {
+    "width": 800,
+    "height": 600,
+    "bytes": 104298
+  },
+  "jamon.webp": {
+    "width": 800,
+    "height": 600,
+    "bytes": 48340
+  },
+  "Raul-oliver.webp": {
+    "width": 1000,
+    "height": 1333,
+    "bytes": 117792
+  },
+  "logo.webp": {
+    "width": 300,
+    "height": 300,
+    "bytes": 13472
+  },
+  "favicon-32.png": {
+    "width": 32,
+    "height": 32,
+    "bytes": 2688
+  },
+  "favicon-192.png": {
+    "width": 192,
+    "height": 192,
+    "bytes": 65371
+  },
+  "apple-touch-icon.png": {
+    "width": 180,
+    "height": 180,
+    "bytes": 58443
+  },
+  "og-image.jpg": {
+    "width": 1200,
+    "height": 630,
+    "bytes": 172345
+  }
+}

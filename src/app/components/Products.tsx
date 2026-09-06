@@ -1,15 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import elaboradosImg from '../../imports/Elaborados.jpg';
-import avesImg from '../../imports/Aves.jpg';
-import terneraImg from '../../imports/Ternera.jpg';
-import ibericosImg from '../../imports/jamon.jpg';
-import cerdoImg from '../../imports/Cerdo.jpg';
-import corderoImg from '../../imports/Cordero.jpg';
+// Versiones optimizadas generadas con `npm run images` desde src/imports/.
+import elaboradosImg from '../../assets/Elaborados.webp';
+import avesImg from '../../assets/Aves.webp';
+import terneraImg from '../../assets/Ternera.webp';
+import ibericosImg from '../../assets/jamon.webp';
+import cerdoImg from '../../assets/Cerdo.webp';
+import corderoImg from '../../assets/Cordero.webp';
 
-const categories = [
+type Category = {
+  name: string;
+  tag: string;
+  items: string[];
+  image: string;
+  color: string;
+  /** Encuadre de la foto dentro de la tarjeta (object-position). */
+  position?: string;
+  /** Tamaño intrínseco del archivo, para que el navegador reserve el hueco. */
+  width: number;
+  height: number;
+};
+
+const categories: Category[] = [
   {
     name: 'Ternera',
+    width: 800,
+    height: 600,
     tag: 'Premium',
     items: ['Chuletones', 'Solomillo', 'Entrecot', 'Lomo alto', 'Redondo', 'Falda'],
     image: terneraImg,
@@ -17,6 +33,8 @@ const categories = [
   },
   {
     name: 'Cerdo',
+    width: 695,
+    height: 696,
     tag: 'Selección',
     items: ['Secreto ibérico', 'Solomillo', 'Costillas', 'Chuletillas', 'Presa', 'Carrillada'],
     image: cerdoImg,
@@ -24,6 +42,8 @@ const categories = [
   },
   {
     name: 'Cordero',
+    width: 768,
+    height: 768,
     tag: 'Temporada',
     items: ['Chuletillas', 'Paletilla', 'Pierna', 'Costillar', 'Chuletas', 'Jarrete'],
     image: corderoImg,
@@ -31,6 +51,8 @@ const categories = [
   },
   {
     name: 'Aves',
+    width: 800,
+    height: 600,
     tag: 'Diario',
     items: ['Pollo entero', 'Pollo partido', 'Pavo', 'Codornices', 'Muslos', 'Alitas'],
     image: avesImg,
@@ -38,6 +60,8 @@ const categories = [
   },
   {
     name: 'Elaborados',
+    width: 800,
+    height: 600,
     tag: 'Artesano',
     items: ['Hamburguesas', 'Pinchitos', 'Albóndigas', 'Flamenquines', 'Adobados', 'Salchichas'],
     image: elaboradosImg,
@@ -45,6 +69,8 @@ const categories = [
   },
   {
     name: 'Ibéricos',
+    width: 800,
+    height: 600,
     tag: 'Tradición',
     items: ['Jamón ibérico', 'Chorizo', 'Salchichón', 'Lomo', 'Morcilla', 'Panceta'],
     image: ibericosImg,
@@ -55,7 +81,6 @@ const categories = [
 
 export function Products() {
   const ref = useRef<HTMLElement>(null);
-  const [active, setActive] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -113,22 +138,25 @@ export function Products() {
                   borderRadius: '6px',
                   overflow: 'hidden',
                   boxShadow: '0 2px 20px rgba(0,0,0,0.06)',
-                  cursor: 'pointer',
-                  border: active === i ? '2px solid var(--color-red)' : '2px solid transparent',
+                  border: '2px solid transparent',
                   transition: 'border-color 0.3s, transform 0.3s, box-shadow 0.3s',
+                  height: '100%',
                 }}
-                onClick={() => setActive(active === i ? null : i)}
               >
                 {/* Image */}
                 <div className="img-overlay" style={{ height: '200px' }}>
                   <ImageWithFallback
                     src={cat.image}
-                    alt={cat.name}
+                    alt={`${cat.name} – Carnicería Raúl Oliver`}
+                    width={cat.width}
+                    height={cat.height}
+                    loading="lazy"
+                    decoding="async"
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      objectPosition: (cat as any).position || 'center',
+                      objectPosition: cat.position || 'center',
                       display: 'block'
                     }}
                   />

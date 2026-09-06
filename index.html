@@ -5,12 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carnicería Raúl Oliver – Carnicería y Charcutería en Lora del Río, Sevilla</title>
     <meta name="description" content="Carnicería y charcutería artesanal en Lora del Río (Sevilla) desde 1999. Las mejores carnes frescas, ibéricos y elaborados artesanales. Visítanos en C/ José Montoto y González de Hoyuela, 6." />
-    <meta name="keywords" content="carnicería Lora del Río, charcutería Sevilla, carne fresca, ibéricos, Raúl Oliver, carnicero Lora del Río" />
+    <meta name="author" content="Carnicería Raúl Oliver" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0f0f0f" />
+
+    <!-- La URL del sitio se define en un único sitio: SITE_URL en vite.config.ts -->
+    <link rel="canonical" href="%SITE_URL%/" />
+
+    <!-- Iconos -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph (WhatsApp, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Carnicería Raúl Oliver" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="%SITE_URL%/" />
     <meta property="og:title" content="Carnicería Raúl Oliver – Lora del Río, Sevilla" />
     <meta property="og:description" content="Tradición y calidad desde 1999. Carnes frescas, ibéricos y elaborados artesanales." />
-    <meta property="og:type" content="website" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://carniceriarauloliver.es" />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Elaborados artesanales de Carnicería Raúl Oliver" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Carnicería Raúl Oliver – Lora del Río, Sevilla" />
+    <meta name="twitter:description" content="Tradición y calidad desde 1999. Carnes frescas, ibéricos y elaborados artesanales." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.jpg" />
+
+    <!-- Imagen de fondo del hero: es el elemento más grande de la primera
+         pantalla (LCP). Debe coincidir con la URL de Hero.tsx. -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      href="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;q=80&amp;w=1400"
+    />
+
+    <!-- Fuentes: preconexión + carga no bloqueante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <!-- Ficha del negocio para Google -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Carnicería y Charcutería Raúl Oliver",
+        "description": "Carnicería y charcutería artesanal en Lora del Río (Sevilla) desde 1999: carnes frescas, ibéricos y elaborados propios.",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/og-image.jpg",
+        "logo": "%SITE_URL%/favicon-192.png",
+        "telephone": "+34625468165",
+        "email": "rauloliver81@icloud.com",
+        "foundingDate": "1999",
+        "currenciesAccepted": "EUR",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "C/ José Montoto y González de Hoyuela, 6",
+          "addressLocality": "Lora del Río",
+          "addressRegion": "Sevilla",
+          "postalCode": "41440",
+          "addressCountry": "ES"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Lora del Río"
+        },
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Calle+Jos%C3%A9+Montoto+y+Gonz%C3%A1lez+de+Hoyuela+6%2C+Lora+del+R%C3%ADo%2C+Sevilla",
+        "sameAs": [
+          "https://www.facebook.com/people/Carnicer%C3%ADa-raul-Oliver/100057560074868/",
+          "https://www.instagram.com/carniceria_raul_oliver/"
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "14:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "17:00",
+            "closes": "20:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "14:30"
+          }
+        ]
+      }
+    </script>
+
     <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
   </head>
   <body>

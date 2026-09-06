@@ -1,10 +1,53 @@
-import { useState } from 'react';
-import logo from '../../imports/image.png';
-import { Facebook, Instagram, MapPin, Clock } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import logo from '../../assets/logo.webp';
+import { Facebook, Instagram, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { business, whatsappUrl } from '../data/business';
 
 export function Footer() {
   const year = new Date().getFullYear();
   const [openLegal, setOpenLegal] = useState<'aviso' | 'privacidad' | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastFocused = useRef<HTMLElement | null>(null);
+
+  // Dialogo legal accesible: cierra con Esc, bloquea el scroll de fondo,
+  // mantiene el foco dentro y lo devuelve al boton de origen al cerrar.
+  useEffect(() => {
+    if (!openLegal) return;
+
+    lastFocused.current = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector<HTMLElement>('button')?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpenLegal(null);
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+      lastFocused.current?.focus();
+    };
+  }, [openLegal]);
 
   return (
     <footer style={{ background: 'var(--color-black)', color: 'rgba(255,255,255,0.7)' }}>
@@ -24,7 +67,7 @@ export function Footer() {
           ¿Listo para la mejor carne de Lora del Río?
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-          Visítanos en C/ José Montoto y González de Hoyuela, 6 · Abrimos de lunes a sábado
+          Visítanos en {business.street} · Abrimos de lunes a sábado
         </p>
         <div className="footer-cta-btns" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a
@@ -45,7 +88,7 @@ export function Footer() {
             Cómo llegar
           </a>
           <a
-            href="https://www.instagram.com/carniceria_raul_oliver/"
+            href={business.instagram}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -76,7 +119,11 @@ export function Footer() {
             <div style={{ marginBottom: '1rem' }}>
               <img
                 src={logo}
-                alt="Raúl Oliver Carnicería"
+                alt="Logotipo de Carnicería Raúl Oliver"
+                width={50}
+                height={50}
+                loading="lazy"
+                decoding="async"
                 style={{
                   height: '50px',
                   width: 'auto',
@@ -89,8 +136,8 @@ export function Footer() {
             </p>
             <div style={{ display: 'flex', gap: '0.6rem' }}>
               {[
-                { href: 'https://www.facebook.com/people/Carnicer%C3%ADa-raul-Oliver/100057560074868/', Icon: Facebook, color: '#1877f2' },
-                { href: 'https://www.instagram.com/carniceria_raul_oliver/', Icon: Instagram, color: '#e1306c' },
+                { href: business.facebook, Icon: Facebook, color: '#1877f2' },
+                { href: business.instagram, Icon: Instagram, color: '#e1306c' },
               ].map(({ href, Icon, color }) => (
                 <a
                   key={href}
@@ -173,13 +220,26 @@ export function Footer() {
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <MapPin size={15} color="var(--color-gold)" style={{ marginTop: '2px', flexShrink: 0 }} />
                 <span style={{ fontSize: '0.82rem', lineHeight: 1.6 }}>
-                  C/ José Montoto y González de Hoyuela, 6<br />
-                  41440 Lora del Río, Sevilla
+                  {business.street}<br />
+                  {business.locality}
                 </span>
               </div>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
                 <Clock size={15} color="var(--color-gold)" style={{ flexShrink: 0 }} />
                 <span style={{ fontSize: '0.82rem' }}>L–V: 9:00–14:00 / 17:00–20:30<br />Sáb: 9:00–14:30</span>
+              </div>
+              <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                <MessageCircle size={15} color="var(--color-gold)" style={{ flexShrink: 0 }} />
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.75)', textDecoration: 'none' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+                >
+                  WhatsApp {business.phoneDisplay}
+                </a>
               </div>
             </div>
           </div>
@@ -201,23 +261,23 @@ export function Footer() {
           <div style={{ display: 'flex', gap: '1.25rem' }}>
             <button
               onClick={() => setOpenLegal('aviso')}
-              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.65)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
             >
               Aviso Legal
             </button>
             <button
               onClick={() => setOpenLegal('privacidad')}
-              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.65)', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
             >
               Política de Privacidad
             </button>
           </div>
-          <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)' }}>
-            Lora del Río, Sevilla · Desde 1999 · Desarrollado por <a href="https://portfolio-javieroliver-web.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'underline', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>Francisco Javier Párraga Oliver</a>
+          <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+            Lora del Río, Sevilla · Desde 1999 · Desarrollado por <a href="https://portfolio-javieroliver-web.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'underline', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}>Francisco Javier Párraga Oliver</a>
           </p>
         </div>
       </div>
@@ -235,7 +295,7 @@ export function Footer() {
           zIndex: 1000,
           padding: '1.5rem',
         }} onClick={() => setOpenLegal(null)}>
-          <div style={{
+          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="legal-title" style={{
             background: 'var(--color-cream)',
             color: 'var(--color-charcoal)',
             maxWidth: '600px',
@@ -249,6 +309,7 @@ export function Footer() {
           }} onClick={e => e.stopPropagation()}>
             <button
               onClick={() => setOpenLegal(null)}
+              aria-label="Cerrar"
               style={{
                 position: 'absolute',
                 top: '1rem', right: '1rem',
@@ -265,7 +326,7 @@ export function Footer() {
             </button>
             {openLegal === 'aviso' ? (
               <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Aviso Legal</h3>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }} id="legal-title">Aviso Legal</h3>
                 <p style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
                   En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se exponen los siguientes datos identificativos del titular de este sitio web:
                 </p>
@@ -273,8 +334,8 @@ export function Footer() {
                   <li><strong>Titular:</strong> Raúl Oliver Sánchez</li>
                   <li><strong>NIF/NIE:</strong> 14622915K</li>
                   <li><strong>Domicilio Social:</strong> C/ Anea, 12, 41440 Lora del Río, Sevilla</li>
-                  <li><strong>Teléfono:</strong> +34 625 468 165</li>
-                  <li><strong>Email:</strong> rauloliver81@icloud.com</li>
+                  <li><strong>Teléfono:</strong> {business.phoneDisplay}</li>
+                  <li><strong>Email:</strong> {business.email}</li>
                 </ul>
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>1. Propiedad Intelectual</h4>
                 <p style={{ fontSize: '0.82rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
@@ -287,7 +348,7 @@ export function Footer() {
               </div>
             ) : (
               <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Política de Privacidad</h3>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '1.25rem', borderBottom: '2px solid var(--color-red)', paddingBottom: '0.5rem', color: 'var(--color-charcoal)' }} id="legal-title">Política de Privacidad</h3>
                 <p style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '1rem', color: 'var(--color-gray-600)' }}>
                   De conformidad con lo dispuesto en el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos de cómo tratamos tus datos personales:
                 </p>

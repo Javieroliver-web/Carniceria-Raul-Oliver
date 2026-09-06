@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { CheckCircle } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import raulPhoto from '../../imports/Raul-oliver.jpg';
+import raulPhoto from '../../assets/Raul-oliver.webp';
 
 const highlights = [
   'Más de 25 años sirviendo a Lora del Río y alrededores',
@@ -65,7 +64,11 @@ export function About() {
             }}>
               <img
                 src={raulPhoto}
-                alt="Raúl Oliver – Maestro carnicero en Lora del Río"
+                alt="Raúl Oliver, maestro carnicero, en su carnicería de Lora del Río"
+                width={1000}
+                height={1333}
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -162,7 +165,7 @@ export function About() {
               {stats.map(({ num, label }) => (
                 <div key={label} style={{ textAlign: 'center' }}>
                   <div className="stat-number">{num}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-400)', marginTop: '0.3rem', letterSpacing: '0.05em' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-gray-600)', marginTop: '0.3rem', letterSpacing: '0.05em' }}>
                     {label}
                   </div>
                 </div>
