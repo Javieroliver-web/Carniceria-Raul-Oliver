@@ -20,6 +20,15 @@ const SITE_URL = process.env.SITE_URL ?? 'https://javieroliver-web.github.io/Car
 // Teléfono de la página 404. Se mantiene aquí a mano, en sintonía con
 // src/app/data/business.ts (importarlo desde la config mezclaría el código
 // de la web con el de Node en la comprobación de tipos).
+// ─────────────────────────────────────────────────────────────────────────────
+// Analítica de Cloudflare (Web Analytics: sin cookies, no hace falta banner).
+// Para activarla: Cloudflare → Analytics & Logs → Web Analytics → Add a site
+// con el dominio de la web, copiar el token del fragmento que da y pegarlo
+// aquí. Vacío = desactivada: no se inyecta el script ni se abre la CSP.
+// El token no es secreto: acaba publicado en el HTML de todas formas.
+// ─────────────────────────────────────────────────────────────────────────────
+const CF_ANALYTICS_TOKEN = ''
+
 const PHONE = '+34625468165'
 const PHONE_DISPLAY = '+34 625 468 165'
 
@@ -69,15 +78,18 @@ function siteUrlPlugin() {
  * - style-src necesita 'unsafe-inline': toda la web usa estilos en línea.
  * - img-src: Unsplash es la foto del hero; data: es el icono de ImageWithFallback.
  * - frame-src: el mapa de Google, que solo se carga al pulsar "Ver mapa".
+ * - connect-src: receptor de errores del portfolio (src/errorReporter.ts) y,
+ *   si está activa, la analítica de Cloudflare.
  * - frame-ancestors no funciona en <meta>; necesitaría una cabecera HTTP, que
  *   GitHub Pages no permite (ver TAREAS-PENDIENTES.txt, punto 2.4).
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
+  `script-src 'self'${CF_ANALYTICS_TOKEN ? ' https://static.cloudflareinsights.com' : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https://images.unsplash.com",
   "font-src 'self'",
+  `connect-src 'self' https://portfolio-javieroliver-web.vercel.app${CF_ANALYTICS_TOKEN ? ' https://cloudflareinsights.com' : ''}`,
   "frame-src https://maps.google.com https://www.google.com",
   "object-src 'none'",
   "base-uri 'self'",
@@ -89,9 +101,14 @@ function cspPlugin() {
     name: 'csp',
     apply: 'build' as const,
     transformIndexHtml(html: string) {
-      return html.replace(
+      const withCsp = html.replace(
         '<meta charset="UTF-8" />',
         `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />`,
+      )
+      if (!CF_ANALYTICS_TOKEN) return withCsp
+      return withCsp.replace(
+        '</body>',
+        `  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='${JSON.stringify({ token: CF_ANALYTICS_TOKEN })}'></script>\n  </body>`,
       )
     },
   }
@@ -108,6 +125,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // La política de privacidad (Footer.tsx) menciona Cloudflare solo si está activa.
+  define: {
+    __CF_ANALYTICS__: JSON.stringify(Boolean(CF_ANALYTICS_TOKEN)),
+  },
   resolve: {
     alias: {
       // Alias @ to the src directory

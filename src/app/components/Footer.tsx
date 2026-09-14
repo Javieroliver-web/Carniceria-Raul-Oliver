@@ -359,7 +359,11 @@ export function Footer() {
                   <li><strong>Legitimación:</strong> Consentimiento del interesado al ponerse en contacto directo con el establecimiento.</li>
                   <li><strong>Conservación:</strong> Los datos se conservarán durante el tiempo estrictamente necesario para responder y gestionar la consulta.</li>
                   <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal.</li>
-                  <li><strong>Servicios externos de la web:</strong> La imagen de portada se descarga de Unsplash, que recibe la dirección IP del visitante como en cualquier descarga. El mapa de Google Maps solo se carga si pulsas «Ver mapa»; a partir de ese momento se aplica la política de privacidad de Google. Esta web no usa cookies propias ni herramientas de analítica.</li>
+                  <li><strong>Servicios externos de la web:</strong> La imagen de portada se descarga de Unsplash, que recibe la dirección IP del visitante como en cualquier descarga. El mapa de Google Maps solo se carga si pulsas «Ver mapa»; a partir de ese momento se aplica la política de privacidad de Google. Esta web no usa cookies.</li>
+                  {__CF_ANALYTICS__ && (
+                    <li><strong>Analítica:</strong> Usamos Cloudflare Web Analytics para contar visitas de forma agregada. No usa cookies ni guarda tu IP ni identificadores que permitan seguirte entre webs.</li>
+                  )}
+                  <li><strong>Informes de errores:</strong> Si la web falla en tu navegador, se envía un aviso técnico (mensaje de error, página y navegador) para poder arreglarlo. No incluye datos que te identifiquen.</li>
                 </ul>
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Tus Derechos</h4>
                 <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
