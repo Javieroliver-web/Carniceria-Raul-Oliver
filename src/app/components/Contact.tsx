@@ -204,6 +204,7 @@ export function Contact() {
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <a
                   href={business.facebook}
+                  aria-label="Facebook (se abre en otra pestaña)"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -218,10 +219,11 @@ export function Contact() {
                   onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#1877f2'; (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-charcoal)'; (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; }}
                 >
-                  <Facebook size={18} />
+                  <Facebook size={18} aria-hidden="true" />
                 </a>
                 <a
                   href={business.instagram}
+                  aria-label="Instagram (se abre en otra pestaña)"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -236,7 +238,7 @@ export function Contact() {
                   onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#e1306c'; (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-charcoal)'; (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; }}
                 >
-                  <Instagram size={18} />
+                  <Instagram size={18} aria-hidden="true" />
                 </a>
               </div>
             </div>

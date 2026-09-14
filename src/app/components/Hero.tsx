@@ -2,6 +2,11 @@ import { useEffect, useRef } from 'react';
 import { ChevronDown, Star } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+// Foto de fondo en varios anchos: el móvil descarga la de 800px en vez de la
+// de 1400px. auto=format sirve WebP/AVIF a quien los admita. Si cambia, hay
+// que actualizar también el <link rel="preload"> de index.html.
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&cs=tinysrgb&fit=max&q=75&auto=format';
+
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null);
 
@@ -53,10 +58,11 @@ export function Hero() {
         }}
       >
         {/* Imagen ambiental de fondo (decorativa): alt vacío para que los
-            lectores de pantalla no la anuncien. Si cambia esta URL hay que
-            actualizar también el <link rel="preload"> de index.html. */}
+            lectores de pantalla no la anuncien. */}
         <ImageWithFallback
-          src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400"
+          src={`${HERO_IMAGE}&w=1400`}
+          srcSet={`${HERO_IMAGE}&w=800 800w, ${HERO_IMAGE}&w=1400 1400w, ${HERO_IMAGE}&w=2000 2000w`}
+          sizes="100vw"
           alt=""
           style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }}
         />

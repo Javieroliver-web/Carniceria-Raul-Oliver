@@ -66,7 +66,7 @@ export function Footer() {
         }}>
           ¿Listo para la mejor carne de Lora del Río?
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
+        <p style={{ color: 'rgba(255,255,255,0.95)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
           Visítanos en {business.street} · Abrimos de lunes a sábado
         </p>
         <div className="footer-cta-btns" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -136,12 +136,13 @@ export function Footer() {
             </p>
             <div style={{ display: 'flex', gap: '0.6rem' }}>
               {[
-                { href: business.facebook, Icon: Facebook, color: '#1877f2' },
-                { href: business.instagram, Icon: Instagram, color: '#e1306c' },
-              ].map(({ href, Icon, color }) => (
+                { href: business.facebook, Icon: Facebook, color: '#1877f2', label: 'Facebook' },
+                { href: business.instagram, Icon: Instagram, color: '#e1306c', label: 'Instagram' },
+              ].map(({ href, Icon, color, label }) => (
                 <a
                   key={href}
                   href={href}
+                  aria-label={`${label} (se abre en otra pestaña)`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -156,7 +157,7 @@ export function Footer() {
                   onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = color; (e.currentTarget as HTMLAnchorElement).style.color = 'white'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.7)'; }}
                 >
-                  <Icon size={16} />
+                  <Icon size={16} aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -164,7 +165,7 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 style={{
+            <h3 style={{
               fontFamily: 'var(--font-heading)',
               fontSize: '1rem',
               color: 'white',
@@ -173,7 +174,7 @@ export function Footer() {
               borderBottom: '1px solid rgba(200,151,58,0.3)',
             }}>
               Navegación
-            </h4>
+            </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {[
                 { href: '#inicio',    label: 'Inicio' },
@@ -206,7 +207,7 @@ export function Footer() {
 
           {/* Contact info */}
           <div>
-            <h4 style={{
+            <h3 style={{
               fontFamily: 'var(--font-heading)',
               fontSize: '1rem',
               color: 'white',
@@ -215,7 +216,7 @@ export function Footer() {
               borderBottom: '1px solid rgba(200,151,58,0.3)',
             }}>
               Contacto
-            </h4>
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <MapPin size={15} color="var(--color-gold)" style={{ marginTop: '2px', flexShrink: 0 }} />
@@ -358,6 +359,7 @@ export function Footer() {
                   <li><strong>Legitimación:</strong> Consentimiento del interesado al ponerse en contacto directo con el establecimiento.</li>
                   <li><strong>Conservación:</strong> Los datos se conservarán durante el tiempo estrictamente necesario para responder y gestionar la consulta.</li>
                   <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal.</li>
+                  <li><strong>Servicios externos de la web:</strong> La imagen de portada se descarga de Unsplash, que recibe la dirección IP del visitante como en cualquier descarga. El mapa de Google Maps solo se carga si pulsas «Ver mapa»; a partir de ese momento se aplica la política de privacidad de Google. Esta web no usa cookies propias ni herramientas de analítica.</li>
                 </ul>
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Tus Derechos</h4>
                 <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
