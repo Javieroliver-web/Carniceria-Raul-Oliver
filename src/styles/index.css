@@ -1,5 +1,5 @@
-/* Las fuentes se cargan desde index.html con preconnect (evita la cadena de
-   peticiones que provoca un @import dentro del CSS). */
+/* Las fuentes están autoalojadas: se importan en src/main.tsx (paquetes
+   @fontsource-variable, un único fichero por familia y estilo). */
 @import './tailwind.css';
 
 :root {
@@ -18,8 +18,8 @@
   --color-gray-400: #a0a09a;
   --color-gray-600: #6b6b65;
 
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-heading: 'Playfair Display Variable', 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter Variable', 'Inter', system-ui, sans-serif;
 
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -492,6 +492,26 @@ h1, h2, h3, h4 {
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
+}
+
+/* ─── Mapa bajo demanda ──────────────────────── */
+.map-placeholder {
+  height: 100%;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(200, 151, 58, 0.14), transparent 60%),
+    var(--color-charcoal);
+}
+/* Sobre el fondo oscuro el foco rojo de .contact-grid no se ve: vuelve el dorado. */
+.contact-grid .map-placeholder :focus-visible {
+  outline-color: var(--color-gold);
 }
 
 /* ─── Movimiento reducido ────────────────────── */

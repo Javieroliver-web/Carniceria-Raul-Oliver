@@ -44,11 +44,48 @@ function siteUrlPlugin() {
   }
 }
 
+/**
+ * Content-Security-Policy como <meta> en el HTML compilado. Solo en build: en
+ * `npm run dev` Vite y el plugin de React inyectan scripts en línea que esta
+ * política bloquearía.
+ *
+ * - style-src necesita 'unsafe-inline': toda la web usa estilos en línea.
+ * - img-src: Unsplash es la foto del hero; data: es el icono de ImageWithFallback.
+ * - frame-src: el mapa de Google, que solo se carga al pulsar "Ver mapa".
+ * - frame-ancestors no funciona en <meta>; necesitaría una cabecera HTTP, que
+ *   GitHub Pages no permite (ver TAREAS-PENDIENTES.txt, punto 2.4).
+ */
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https://images.unsplash.com",
+  "font-src 'self'",
+  "frame-src https://maps.google.com https://www.google.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+].join('; ')
+
+function cspPlugin() {
+  return {
+    name: 'csp',
+    apply: 'build' as const,
+    transformIndexHtml(html: string) {
+      return html.replace(
+        '<meta charset="UTF-8" />',
+        `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />`,
+      )
+    },
+  }
+}
+
 export default defineConfig({
   // Subcarpeta en GitHub Pages, raíz en local o con dominio propio.
   base: process.env.GITHUB_ACTIONS ? '/Carniceria-Raul-Oliver/' : '/',
   plugins: [
     siteUrlPlugin(),
+    cspPlugin(),
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
     react(),

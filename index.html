@@ -45,13 +45,9 @@
       href="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;q=80&amp;w=1400"
     />
 
-    <!-- Fuentes: preconexión + carga no bloqueante -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap"
-    />
+    <!-- Las fuentes van autoalojadas (se importan en src/main.tsx). La
+         Content-Security-Policy la añade vite.config.ts solo al compilar:
+         en `npm run dev` Vite inyecta scripts en línea que la CSP bloquearía. -->
 
     <!-- Ficha del negocio para Google -->
     <script type="application/ld+json">

@@ -16,6 +16,7 @@ const iconCircle = {
 export function Contact() {
   const ref = useRef<HTMLElement>(null);
   const [openState, setOpenState] = useState(() => getOpenState());
+  const [showMap, setShowMap] = useState(false);
 
   // El estado depende de la hora: se refresca cada minuto para que no se quede
   // "Abierto" en una pestaña que lleva horas abierta.
@@ -241,7 +242,8 @@ export function Contact() {
             </div>
           </div>
 
-          {/* Map */}
+          {/* Map: el iframe de Google solo se carga cuando el visitante lo pide.
+              Hasta entonces no se contacta con Google (ni su IP ni cookies). */}
           <div className="reveal" style={{
             borderRadius: '8px',
             overflow: 'hidden',
@@ -249,16 +251,37 @@ export function Contact() {
             height: '100%',
             minHeight: '450px',
           }}>
-            <iframe
-              src={business.mapsEmbedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0, display: 'block', minHeight: '450px' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Ubicación Carnicería Raúl Oliver – C/ José Montoto y González de Hoyuela 6, Lora del Río"
-            />
+            {showMap ? (
+              <iframe
+                src={business.mapsEmbedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: 'block', minHeight: '450px' }}
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Carnicería Raúl Oliver – C/ José Montoto y González de Hoyuela 6, Lora del Río"
+              />
+            ) : (
+              <div className="map-placeholder">
+                <MapPin size={40} color="var(--color-gold)" aria-hidden="true" />
+                <div>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--color-white)' }}>
+                    {business.street}
+                  </div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.25rem' }}>
+                    {business.locality}
+                  </div>
+                </div>
+                <button type="button" className="btn-primary" onClick={() => setShowMap(true)}>
+                  <MapPin size={16} aria-hidden="true" />
+                  Ver mapa
+                </button>
+                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', maxWidth: '300px', lineHeight: 1.5 }}>
+                  El mapa lo sirve Google Maps: al pulsar se conectará con sus
+                  servidores, que pueden usar cookies.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
