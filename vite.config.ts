@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { readFileSync } from 'fs'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
@@ -16,7 +17,13 @@ import react from '@vitejs/plugin-react'
 // ─────────────────────────────────────────────────────────────────────────────
 const SITE_URL = process.env.SITE_URL ?? 'https://javieroliver-web.github.io/Carniceria-Raul-Oliver'
 
-/** Sustituye %SITE_URL% en index.html y genera robots.txt + sitemap.xml. */
+// Teléfono de la página 404. Se mantiene aquí a mano, en sintonía con
+// src/app/data/business.ts (importarlo desde la config mezclaría el código
+// de la web con el de Node en la comprobación de tipos).
+const PHONE = '+34625468165'
+const PHONE_DISPLAY = '+34 625 468 165'
+
+/** Sustituye %SITE_URL% en index.html y genera robots.txt, sitemap.xml y 404.html. */
 function siteUrlPlugin() {
   return {
     name: 'site-url',
@@ -39,6 +46,16 @@ function siteUrlPlugin() {
           `  <url>\n    <loc>${SITE_URL}/</loc>\n    <lastmod>${today}</lastmod>\n` +
           `    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n` +
           `</urlset>\n`,
+      })
+      // GitHub Pages sirve 404.html para cualquier ruta inexistente.
+      this.emitFile({
+        type: 'asset',
+        fileName: '404.html',
+        source: readFileSync(path.resolve(__dirname, 'src/404.html'), 'utf-8')
+          .replaceAll('%SITE_URL%', SITE_URL)
+          .replaceAll('%CSP%', CSP)
+          .replaceAll('%PHONE_DISPLAY%', PHONE_DISPLAY)
+          .replaceAll('%PHONE%', PHONE),
       })
     },
   }
