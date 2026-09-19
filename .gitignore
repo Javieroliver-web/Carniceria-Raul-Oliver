@@ -30,3 +30,6 @@ pnpm-debug.log*
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+# Notas de trabajo locales
+TAREAS-PENDIENTES.txt

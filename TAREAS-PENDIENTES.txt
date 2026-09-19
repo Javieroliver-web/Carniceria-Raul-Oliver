@@ -1,0 +1,225 @@
+================================================================================
+CARNICERIA RAUL OLIVER - TAREAS PENDIENTES
+Ultima actualizacion: 14 de septiembre de 2026
+================================================================================
+
+Este fichero recoge lo que quedo hecho en la revision del 6/09/2026 y lo que
+queda por decidir o hacer. Sirve de punto de partida para la proxima sesion.
+
+
+--------------------------------------------------------------------------------
+1. PENDIENTE - NECESITA UNA DECISION TUYA
+--------------------------------------------------------------------------------
+
+[ ] 1.1  FOTO REAL DEL LOCAL PARA LA PORTADA
+         La imagen de fondo del hero sigue siendo una foto de archivo de
+         Unsplash (una carniceria cualquiera, no la vuestra). Se le quito el
+         texto alternativo que afirmaba que era el local real, porque no lo es.
+         QUE HACE FALTA: una foto del local o del mostrador, a ser posible
+         apaisada y de al menos 1600px de ancho.
+         DONDE VA: se guarda en src/imports/, se anade al script
+         scripts/optimize-images.mjs y se cambia la URL en src/app/components/
+         Hero.tsx (linea del ImageWithFallback) y el <link rel="preload"> de
+         index.html, que deben apuntar a la misma imagen.
+         BENEFICIO: carga mas rapida (deja de depender de un servidor externo),
+         menos transferencia de datos a terceros y la web deja de ensenar un
+         local que no es el vuestro.
+
+[ ] 1.2  DOMINIO PROPIO carniceriarauloliver.es
+         A dia de hoy el dominio NO resuelve (no existe en el DNS). La web vive
+         en https://javieroliver-web.github.io/Carniceria-Raul-Oliver/ y el
+         canonical apunta ahi, que es lo correcto mientras tanto.
+         CUANDO EL DOMINIO ESTE ACTIVO, tres pasos (tambien en el README):
+           1. Apuntar el DNS a GitHub Pages y activarlo en Settings > Pages.
+           2. En vite.config.ts: SITE_URL = 'https://carniceriarauloliver.es'
+              y base: '/'  (quitar la condicion de GITHUB_ACTIONS).
+           3. Crear public/CNAME con una linea: carniceriarauloliver.es
+         OJO: si se pone el dominio y NO se cambia el base a '/', la web se
+         queda en blanco porque los assets se buscan en /Carniceria-Raul-Oliver/.
+
+[ ] 1.3  COORDENADAS GPS PARA LA FICHA DE GOOGLE
+         El JSON-LD de index.html lleva direccion, telefono, email y horario,
+         pero no las coordenadas ("geo"), porque no me las invento.
+         QUE HACE FALTA: abrir Google Maps en el local, clic derecho sobre el
+         punto exacto y copiar latitud y longitud. Se anaden al bloque JSON-LD.
+
+[x] 1.4  CABECERA CSP + FUENTES AUTOALOJADAS  -> HECHO EL 14/09 (ver seccion 3b)
+
+
+--------------------------------------------------------------------------------
+2. PENDIENTE - MEJORAS PROPUESTAS (sin bloqueo, cuando se quiera)
+--------------------------------------------------------------------------------
+
+[x] 2.1  Mapa que solo carga al hacer clic ("Ver mapa")  -> HECHO EL 14/09
+
+[ ] 2.2  Direccion del Aviso Legal. Ahora figura C/ Anea, 12, que es un
+         domicilio particular. La LSSI (art. 10) permite usar "la direccion de
+         un establecimiento permanente", asi que probablemente pueda ponerse la
+         direccion de la carniceria. CONSULTAR CON EL GESTOR DE RAUL antes de
+         cambiarlo. El NIF si es obligatorio publicarlo, ese se queda.
+
+[x] 2.3  Fijar las acciones de GitHub por SHA  -> HECHO EL 14/09
+
+[ ] 2.4  Migrar a Cloudflare Pages o Netlify SI se quiere poder poner cabeceras
+         HTTP de seguridad de verdad (frame-ancestors / X-Frame-Options), que
+         GitHub Pages no permite. Solo si compensa; con el dominio propio
+         funcionando en Pages tambien vale.
+
+[ ] 2.5  Carpeta src/app/components/ui/ (48 componentes de shadcn/ui) borrada
+         el 6/09 por no usarse: generaba 49 KB de CSS en cada visita.
+         SI ALGUN DIA HACE FALTA (formulario, carrusel, dialogo):
+           git checkout <commit anterior> -- src/app/components/ui
+         y acotar el escaneo de Tailwind en src/styles/tailwind.css cambiando
+         @source '../**/*.{js,ts,jsx,tsx}' por '../app/components/*.tsx'
+         para no volver a pagar esos 49 KB.
+
+
+--------------------------------------------------------------------------------
+3. HECHO EL 6 DE SEPTIEMBRE DE 2026
+--------------------------------------------------------------------------------
+
+ERRORES CORREGIDOS
+  - Canonical apuntaba a un dominio que no existe: ahora apunta a la URL real.
+    La URL se define una sola vez en SITE_URL (vite.config.ts) y de ahi salen
+    canonical, Open Graph, JSON-LD, robots.txt y sitemap.xml.
+  - El boton "Llamar ahora" del menu movil salia gigante: .mobile-nav a (0,1,1)
+    ganaba en especificidad a .btn-primary (0,1,0).
+  - Las secciones quedaban tapadas por la cabecera fija al llegar desde el menu
+    (scroll-margin-top: 90px).
+  - El menu movil cerrado seguia siendo tabulable y lo leian los lectores de
+    pantalla: ahora visibility:hidden + aria-hidden, aria-expanded en la
+    hamburguesa, cierre con Esc y aria-label en la X.
+  - Modales legales: role="dialog", aria-modal, cierre con Esc, scroll
+    bloqueado, foco atrapado dentro y devuelto al boton de origen.
+  - Tarjetas de producto: quitado el clic que no hacia nada (solo pintaba un
+    borde) y que ni era accesible por teclado.
+  - Contraste por debajo del minimo WCAG AA en las etiquetas de las estadisticas
+    y en los enlaces del pie: corregido.
+  - No habia NINGUN estilo de foco de teclado: anadido en toda la web.
+  - CSS muerto del hamburger (reglas para <span> que ya no existian).
+
+RENDIMIENTO (la pagina paso de ~2,6 MB a ~620 KB)
+  - Imagenes a WebP y redimensionadas: 2,3 MB -> 604 KB. Script repetible:
+    npm run images
+  - loading="lazy", decoding="async" y width/height en todas las imagenes.
+  - CSS de 72 KB a 15 KB (borrando shadcn/ui sin usar, theme.css, globals.css,
+    fonts.css y tw-animate-css).
+  - Fuentes con preconnect en el <head> en vez de un @import encadenado dentro
+    del CSS; imagen del hero con preload fetchpriority=high.
+  - Parallax del hero con requestAnimationFrame y desactivado con
+    prefers-reduced-motion.
+
+SEO
+  - Favicon (32/192/apple-touch), og:image 1200x630, og:url, og:locale,
+    og:site_name, twitter:card, theme-color.
+  - JSON-LD tipo Store con direccion, telefono, email, horario, redes y mapa.
+  - robots.txt y sitemap.xml generados en cada build.
+
+FUNCIONALIDAD NUEVA
+  - Boton flotante de WhatsApp + WhatsApp en Contacto y en el pie.
+  - Email visible y boton "Como llegar" a Google Maps.
+  - Indicador "Abierto ahora / Cerrado" calculado con la hora de Madrid (no la
+    del visitante), refrescado cada minuto. Probado con 8 casos: cierre del
+    mediodia, tarde, sabado->lunes, domingo y horario de invierno.
+  - src/app/data/business.ts como fuente unica de telefono, direccion, email,
+    horario y redes sociales.
+
+MANTENIMIENTO
+  - TypeScript instalado: npm run build ahora comprueba tipos antes de compilar
+    (antes no se comprobaban nunca, pese a haber tsconfig).
+  - package.json renombrado (era "@figma/my-make-file") y sin las 45
+    dependencias que no se usaban (MUI, recharts, radix, react-slick...).
+  - StrictMode, <main> semantico, plugin figmaAssetResolver muerto eliminado.
+  - README con comandos y procedimiento del dominio.
+
+SEGURIDAD (revisada el mismo dia)
+  - Vite 6.3.5 -> 6.4.3: 7 vulnerabilidades del servidor de DESARROLLO, entre
+    ellas filtracion del hash NTLMv2 en Windows via rutas UNC y lectura
+    arbitraria de ficheros por el WebSocket del dev server. El sitio publicado
+    no estaba afectado, pero la maquina de desarrollo si.
+  - node-tar y sharp (0.34 -> 0.35.4, CVEs de libvips) actualizados.
+    npm audit: 0 vulnerabilidades.
+  - Comprobado y limpio: sin secretos en el repo ni en el historial de git,
+    sin innerHTML/eval/dangerouslySetInnerHTML, 9 de 9 enlaces externos con
+    rel="noopener noreferrer", workflow de despliegue con permisos minimos y
+    sin interpolar entradas no confiables.
+  - Corregido un preconnect a Unsplash que llevaba crossorigin y por eso no
+    servia de nada (la peticion de la imagen no es CORS y no reutilizaba esa
+    conexion).
+
+RIESGO CONOCIDO QUE SIGUE ABIERTO (actualizado el 14/09)
+  - Fuentes y mapa ya no contactan con Google sin permiso (ver 3b). Queda
+    solo la foto del hero, que sigue viniendo de Unsplash: cada visita manda
+    la IP del cliente a Unsplash, y la politica de privacidad dice que "no se
+    ceden datos a terceros". Se resuelve con el punto 1.1.
+
+
+--------------------------------------------------------------------------------
+3b. HECHO EL 14 DE SEPTIEMBRE DE 2026
+--------------------------------------------------------------------------------
+
+  - FUENTES AUTOALOJADAS: paquetes @fontsource-variable/inter y
+    @fontsource-variable/playfair-display, importados en src/main.tsx. Se
+    quitaron los <link> a Google Fonts de index.html. El navegador solo
+    descarga el subconjunto latino (~125 KB); los demas alfabetos se quedan en
+    dist/ sin coste para el visitante.
+  - CSP: la anade cspPlugin() en vite.config.ts SOLO al compilar (en
+    npm run dev Vite inyecta scripts en linea que la bloquearian). Por eso,
+    para probarla hay que usar  npm run build  y  npm run preview, no dev.
+    Si algun dia se anade un recurso externo (otra imagen, un script de
+    analitica...), hay que anadir su dominio ahi o no cargara.
+  - MAPA BAJO DEMANDA: Contact.tsx muestra una tarjeta con la direccion y el
+    boton "Ver mapa"; el iframe de Google solo se crea al pulsarlo.
+  - ACCIONES DE GITHUB fijadas por SHA en deploy.yml (mismos commits que las
+    etiquetas v4/v5/v3 que habia, asi que el despliegue no cambia).
+  - VERIFICADO con Chrome headless sobre npm run preview: 0 violaciones de
+    CSP, 0 errores de consola, 0 imagenes rotas, fuentes Playfair (900 y
+    cursiva) e Inter cargadas, antes de pulsar el mapa solo se contacta con
+    localhost y Unsplash, tras pulsarlo el mapa carga bien, y en movil (390px)
+    no hay desbordamiento horizontal.
+
+
+--------------------------------------------------------------------------------
+4. CHULETA PARA LA PROXIMA SESION
+--------------------------------------------------------------------------------
+
+COMANDOS
+  npm run dev        servidor de desarrollo
+  npm run build      comprueba tipos y genera dist/ (con robots.txt y sitemap)
+  npm run typecheck  solo tipos
+  npm run images     regenera webp, favicons e imagen de compartir
+  npm audit          estado de vulnerabilidades
+
+DONDE ESTA CADA COSA
+  Telefono, direccion, email, horario, redes  -> src/app/data/business.ts
+                                                 (el horario del JSON-LD de
+                                                 index.html hay que mantenerlo
+                                                 en sintonia a mano)
+  URL publica del sitio                       -> SITE_URL en vite.config.ts
+  Fotos: original en src/imports/, se ejecuta npm run images, y salen los
+  .webp a src/assets/ y los iconos a public/
+  Estilos globales, animaciones y responsive  -> src/styles/index.css
+
+  Content-Security-Policy                     -> const CSP en vite.config.ts
+  Cuando cambie la foto del hero (punto 1.1): quitar https://images.unsplash.com
+  de img-src en esa CSP.
+
+ANALITICA DE CLOUDFLARE (preparada, falta el token)
+  1. Cloudflare -> Analytics & Logs -> Web Analytics -> Add a site
+     (poner el dominio de la web; no hace falta mover el DNS a Cloudflare).
+  2. Del fragmento que da, copiar solo el valor de "token".
+  3. Pegarlo en CF_ANALYTICS_TOKEN (vite.config.ts), commit y push.
+  Con el token se inyecta el script, la CSP se abre solo para Cloudflare y
+  la politica de privacidad pasa a mencionarlo. Sin cookies: no hace falta
+  banner.
+
+AVISO DE ERRORES
+  Los errores de JavaScript de la web llegan a Discord a traves del receptor
+  del portfolio (src/errorReporter.ts -> /api/error). Si cambia el dominio
+  (punto 1.2), anadirlo a ALLOWED_ORIGINS en api/error.js del portfolio.
+
+ESTADO DE GIT AL CERRAR LA SESION DEL 14/09
+  Hay 2 commits en local SIN subir a GitHub ("Mejoras de seguridad" del 6/09
+  y el de fuentes/CSP/mapa del 14/09). La web publicada no cambia hasta hacer:
+    git push
+================================================================================
