@@ -27,7 +27,7 @@ const SITE_URL = process.env.SITE_URL ?? 'https://javieroliver-web.github.io/Car
 // aquí. Vacío = desactivada: no se inyecta el script ni se abre la CSP.
 // El token no es secreto: acaba publicado en el HTML de todas formas.
 // ─────────────────────────────────────────────────────────────────────────────
-const CF_ANALYTICS_TOKEN = ''
+const CF_ANALYTICS_TOKEN = '0f140f7429f8406bbf51434e4f212644'
 
 const PHONE = '+34625468165'
 const PHONE_DISPLAY = '+34 625 468 165'
