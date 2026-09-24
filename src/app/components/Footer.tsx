@@ -364,7 +364,7 @@ export function Footer() {
                   {__CF_ANALYTICS__ && (
                     <li><strong>Analítica:</strong> Usamos Cloudflare Web Analytics para contar visitas de forma agregada. No usa cookies ni guarda tu IP ni identificadores que permitan seguirte entre webs.</li>
                   )}
-                  <li><strong>Informes de errores:</strong> Si la web falla en tu navegador, se envía un aviso técnico (mensaje de error y página) para poder arreglarlo. No incluye datos que te identifiquen. Pasa por Vercel y Discord (Estados Unidos, ambos adheridos al Marco de Privacidad de Datos UE-EE. UU.).</li>
+                  <li><strong>Informes de errores:</strong> Si la web falla en tu navegador, se envía un aviso técnico (mensaje de error, página y tipo de navegador) para poder arreglarlo. No incluye datos que te identifiquen. Pasa por Vercel y Discord (Estados Unidos, ambos adheridos al Marco de Privacidad de Datos UE-EE. UU.).</li>
                 </ul>
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Tus Derechos</h4>
                 <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
