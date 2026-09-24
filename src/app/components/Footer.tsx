@@ -354,20 +354,21 @@ export function Footer() {
                   De conformidad con lo dispuesto en el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos de cómo tratamos tus datos personales:
                 </p>
                 <ul style={{ fontSize: '0.85rem', lineHeight: 1.8, marginBottom: '1.5rem', paddingLeft: '1.2rem', color: 'var(--color-gray-600)', listStyleType: 'disc' }}>
-                  <li><strong>Responsable del Tratamiento:</strong> Raúl Oliver Sánchez</li>
+                  <li><strong>Responsable del Tratamiento:</strong> Raúl Oliver Sánchez (NIF 14622915K), C/ Anea, 12, 41440 Lora del Río, Sevilla. Contacto: {business.email} · {business.phoneDisplay}</li>
                   <li><strong>Finalidad:</strong> Atender las consultas de información o solicitudes realizadas mediante contacto telefónico, WhatsApp o redes sociales.</li>
                   <li><strong>Legitimación:</strong> Consentimiento del interesado al ponerse en contacto directo con el establecimiento.</li>
                   <li><strong>Conservación:</strong> Los datos se conservarán durante el tiempo estrictamente necesario para responder y gestionar la consulta.</li>
-                  <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal.</li>
+                  <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal. Si nos escribes por WhatsApp, Instagram o Facebook, tu mensaje lo trata también Meta según sus propias condiciones, con posibles transferencias a Estados Unidos amparadas por el Marco de Privacidad de Datos UE-EE. UU.</li>
+                  <li><strong>Alojamiento:</strong> La web está alojada en GitHub Pages (GitHub Inc., Estados Unidos), que recibe los datos técnicos de cada visita, como la IP. Transferencia amparada por el Marco de Privacidad de Datos UE-EE. UU.</li>
                   <li><strong>Servicios externos de la web:</strong> La imagen de portada se descarga de Unsplash, que recibe la dirección IP del visitante como en cualquier descarga. El mapa de Google Maps solo se carga si pulsas «Ver mapa»; a partir de ese momento se aplica la política de privacidad de Google. Esta web no usa cookies.</li>
                   {__CF_ANALYTICS__ && (
                     <li><strong>Analítica:</strong> Usamos Cloudflare Web Analytics para contar visitas de forma agregada. No usa cookies ni guarda tu IP ni identificadores que permitan seguirte entre webs.</li>
                   )}
-                  <li><strong>Informes de errores:</strong> Si la web falla en tu navegador, se envía un aviso técnico (mensaje de error, página y navegador) para poder arreglarlo. No incluye datos que te identifiquen.</li>
+                  <li><strong>Informes de errores:</strong> Si la web falla en tu navegador, se envía un aviso técnico (mensaje de error y página) para poder arreglarlo. No incluye datos que te identifiquen. Pasa por Vercel y Discord (Estados Unidos, ambos adheridos al Marco de Privacidad de Datos UE-EE. UU.).</li>
                 </ul>
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--color-charcoal)' }}>Tus Derechos</h4>
                 <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--color-gray-600)' }}>
-                  Puedes ejercer tus derechos de acceso, rectificación, supresión y limitación del tratamiento escribiendo a la dirección del responsable o a través de los datos de contacto facilitados.
+                  Puedes ejercer tus derechos de acceso, rectificación, supresión, limitación, oposición y portabilidad, y retirar tu consentimiento en cualquier momento, escribiendo a {business.email} o en la dirección del responsable. Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos (www.aepd.es).
                 </p>
               </div>
             )}
